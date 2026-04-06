@@ -12,7 +12,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"], 
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -77,7 +77,6 @@ def mark_attendance(user: sechma.attendance, db: Session = Depends(get_db)):
         return {"message": "Total classes must be greater than zero"}
     if user.attended >= user.total_class:
         return {"message": "Attended classes cannot be greater than total classes"}
-
     percentage = (user.attended / user.total_class) * 100
     new_attendance = model.attendance(
         roll_number=user.roll_number,
